@@ -18,19 +18,54 @@ function shake(){
    setTimeout(function(){ getFortune(); }, 1500);
 }
 
-
-//generate the fortune for the ball
+// add your logic in here in place of the array
 function getFortune(){
-    //array of fortunes
-    var fortunes = ['It is certain', 'It is decidedly so', 'Without a doubt', 'Yes -- definitely', 'You may rely on it', 'As I see it, yes', 'Most likely', 'Outlook good', 'Yes, Signs point to yes', 'Reply hazy', 'try again', 'Ask again later', 'Better not tell you now', 'Cannot predict now', 'Concentrate and ask again', 'Dont count on it', 'My reply is no', 'My sources say no', 'Outlook not so good', 'Very doubtful']
+    // test array of image urls
+    var fortunes = [
+        'https://i.imgur.com/5JK2lIS.jpeg', 
+        'https://i.imgur.com/QkA4sXh.jpeg', 
+        'https://i.imgur.com/JIf91sD.jpeg', 
+        'https://i.imgur.com/0Im9fE6.jpeg', 
+        'https://i.imgur.com/ncvz0US.jpeg', 
+        'https://i.imgur.com/OkS8jSu.jpeg', 
+        'https://i.imgur.com/EplUQyv.jpeg', 
+        'https://i.imgur.com/TsA68iy.png', 
+        'https://i.imgur.com/VhYtkqW.jpeg', 
+        'https://i.imgur.com/oVrcJxv.jpeg',
+        'https://i.imgur.com/HQEFdEX.jpeg',
+        'https://i.imgur.com/kjbkBeq.jpeg',
+        'https://i.imgur.com/o44nGp2.jpeg',
+        'https://i.imgur.com/R82KgwB.jpeg']
 
-    //get a random fortune message message
+    // pick a random entry from the array
     var fortune = fortunes[Math.floor(Math.random()*fortunes.length)];
 
-    //display the fortune on the page
-    var parent = document.getElementById("fortune");
-    var newMessage = document.createElement("div");
-    newMessage.setAttribute('id', "message");
-    newMessage.innerHTML = "\""+fortune+"\"";
-    parent.appendChild(newMessage);
+    // fetch the image
+    getFortuneFromURL(fortune);
+}
+
+function getFortuneFromURL(url){
+    fetch(url)
+    .then(res => res.blob())
+    .then(blob => handler(blob))
+}
+
+function handler(inputBlob) {
+
+    const url = URL.createObjectURL(inputBlob);
+    
+    document.getElementById("fortune").src = url;
+}
+
+// another approach if you do not need to use a blob - just call this instead from line 18
+function getFortuneFromApi(){
+    url = "https://your-api/decisionmaker";
+
+    fetch(url)
+    .then(function(response){
+        return response.json();
+    })
+    .then(function(data){
+        document.getElementById("fortune").src = url;
+    })
 }
