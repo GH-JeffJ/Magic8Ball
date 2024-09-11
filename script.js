@@ -1,13 +1,8 @@
 function shake(){
 
-   var ball= document.getElementById("ball")
-   var messageText = document.getElementById("message")
-
-   //remove previous message if it exists
-   if(messageText != null){
-    messageText.parentNode.removeChild(messageText);
-   }
-   
+   const ball= document.getElementById("ball")
+	ball.src = "./images/8ball.png"
+   const shake= document.getElementById("shake")
    //Make the ball shake by adding the css class
    ball.classList.add("shake");
 
@@ -15,7 +10,7 @@ function shake(){
    setTimeout(function(){ ball.classList.remove("shake"); }, 1500);
    
    //call the fortune function to get your fortune only after 2sec
-   setTimeout(function(){ getFortune(); }, 1500);
+   setTimeout(function(){ getFortuneFromApi(); }, 1500);
 }
 
 // add your logic in here in place of the array
@@ -39,7 +34,7 @@ function getFortune(){
 
     // pick a random entry from the array
     var fortune = fortunes[Math.floor(Math.random()*fortunes.length)];
-
+	
     // fetch the image
     getFortuneFromURL(fortune);
 }
@@ -54,18 +49,42 @@ function handler(inputBlob) {
 
     const url = URL.createObjectURL(inputBlob);
     
-    document.getElementById("fortune").src = url;
+    document.getElementById("ball").src = url;
 }
 
 // another approach if you do not need to use a blob - just call this instead from line 18
-function getFortuneFromApi(){
-    url = "https://your-api/decisionmaker";
+//function getFortuneFromApi(){
+//    url = "https://1zacj58fte.execute-api.us-east-2.amazonaws.com/default/magic8ball";
+//    fetch(url)
+//    .then(function(response){
+//        return response.text();
+//    })
+//    .then(function(data){
+//        document.getElementById("ball").src = url;
+//    })
+//}
+function getFortuneFromApi() {
+    const url = "https://1zacj58fte.execute-api.us-east-2.amazonaws.com/default/magic8ball";
 
     fetch(url)
-    .then(function(response){
-        return response.json();
-    })
-    .then(function(data){
-        document.getElementById("fortune").src = url;
-    })
+        .then(function(response) {
+            // Check if the response is OK (status in the range 200-299)
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.text(); // The API returns the URL as plain text
+        })
+        .then(function(imageUrl) {
+            // Check if the image URL is not empty
+            if (imageUrl) {
+                document.getElementById("ball").src = imageUrl;
+            } else {
+                console.error('Empty image URL received from API.');
+                // Optionally handle the empty URL case here
+            }
+        })
+        .catch(function(error) {
+            console.error('Error fetching image URL:', error);
+            // Optionally handle the error here
+        });
 }

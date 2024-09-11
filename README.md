@@ -1,4 +1,1 @@
-# Magic8Ball
-## 5min Tech Projects
-Magic 8 Ball CSS Animation -- CSS for Beginners
-Learn to build a Magic 8 Ball website using HTML, JS, and CSS animation -- click on the "Shake" button to get your fortune! 
+Magic 8 ball app demonstrating serverless architecture. The Components are Cloudfront -> S3 -> API Gateway -> LAMBDA -> DynamoDB. From Api Gateway and beyond, we are retrieving a image path retrieved using a random number generator to give the returned answers variability.
