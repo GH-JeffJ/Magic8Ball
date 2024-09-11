@@ -1,0 +1,31 @@
+First things first, how is this currently configured.
+
+I have two FQDN's configured for the app, the first is to the app itself, the second is a custom domain name for the API. Neither are required.
+
+You will need one role for LAMBDA to write to CloudWatch Logs, write traces to X-Ray, and query the DDB table.
+
+The LAMBDA function uses Python 3.12 and has X-Ray tracing turned on within the LAMBDA configuration and also includes code to instrument the calls to DDB. For the LAMBDA function itself, you will need to add the PowerTools for Python layer in order to use the X-Ray instrumentation.
+
+The API Gateway should be configured as a Rest API so that you can instrument it with X-Ray as well which is enabled on the default stage. For ease of deployment, I simply created the API integration by creating the trigger from within the LAMBDA console.
+
+Now, what is the actual flow and applicble config info?
+The app is hosted out of an S3 bucket behind CloudFront. When you load the web page, initially it loads a static page from S3. When you click the Answer button, first it will reset the webpage image to the initial 8 ball image. Next, it makes a call to API gateway using the custom domain name references earlier. API Gateway triggers a LAMBDA function that does two things. First, it generates a random number between a and 20. Then, it uses that random number to query a Partition Key in DDB called lookup and returns an image path from the Sort Key called value. This provides a relative path back to the website and loads that random image. The dynamic content and shaking the 8 ball on the screen is all executed from the javascript file. At this point, you can hit the Answer button again and the process repeats.
+
+Now, what do you need to do:
+
+1. Create an S3 bucket and set it up as a static Website
+2. Unzip and upload all the files from the website.zip file to the root of your S3 bucket, default page is index.html. We are going to update the javascript file so you will upload that again momentarily.
+3. Create a CloudFront distribution using the S3 bucket as the origin. I have caching disabled for troubleshooting but you could easily cache the jpg and gif files if you like. Set the default document to index.html here too.
+4. Create the DynamoDB table (magic8ball-ddb-tbl) with a PK of lookup and a SK of value and populate whichever way you see fit.
+4. Create the LAMBDDA function and add the code from lambda.py, verify your role can query the DDB table, write to CW Logs and a policy should automatically when you enable X-Ray
+4a. Turn on X-Ray tracing
+4b. If you used different values for your ddb table, PK or SK, update them in lines 16-18 of the LAMBDA Function.
+5. Create your API Gateway Trigger, remember to use a Rest API if you are going to use X-Ray.
+5. Go to the default stage and enable X-Ray tracing.
+6. If you have a custom domain name in API Gateway, make sure you map it to your API Gateway and Stage.
+7. Open up the script.js file and change line 29 to reference your API Gateway Invoke URL.
+8. Test your LAMBDA function, no input is required in your test event. You should see a ./IMAGE.gif path returned as part of the body response. If not, check the error message and see what is broke.
+9. Using the API Gateway invoke URL, verify you have a text return in your browser
+10. Hit up your website endpoint and verify everything is working. Click the Answers button and await a refresh which will take about two seconds to generate. The 8 ball will shake for 1.5 seconds and then API Gateway will be called to get the image path and update the page.
+
+11. You will see some lines commented out in the LAMBDA function and some notes. I use these to load items within the handler and external to the handler to highlight best practices and how you can take a function that takes 5+ seconds to execute to 20-50ms to execute when you reuse code outside the handler appropriately.

@@ -1,0 +1,167 @@
+{
+    "Items": [
+        {
+            "value": {
+                "S": "ITISCERTAIN.gif"
+            },
+            "lookup": {
+                "N": "7"
+            }
+        },
+        {
+            "value": {
+                "S": "ITISDECIDEDLYSO.gif"
+            },
+            "lookup": {
+                "N": "8"
+            }
+        },
+        {
+            "value": {
+                "S": "MYREPLYISNO.gif"
+            },
+            "lookup": {
+                "N": "10"
+            }
+        },
+        {
+            "value": {
+                "S": "BETTERNOTTELL.gif"
+            },
+            "lookup": {
+                "N": "3"
+            }
+        },
+        {
+            "value": {
+                "S": "ASKAGAINLATER.gif"
+            },
+            "lookup": {
+                "N": "2"
+            }
+        },
+        {
+            "value": {
+                "S": "SIGNSPOINTTOYES.gif"
+            },
+            "lookup": {
+                "N": "14"
+            }
+        },
+        {
+            "value": {
+                "S": "YESDEFINITELY.gif"
+            },
+            "lookup": {
+                "N": "18"
+            }
+        },
+        {
+            "value": {
+                "S": "OUTLOOKGOOK.gif"
+            },
+            "lookup": {
+                "N": "12"
+            }
+        },
+        {
+            "value": {
+                "S": "MOSTLIKELY.gif"
+            },
+            "lookup": {
+                "N": "9"
+            }
+        },
+        {
+            "value": {
+                "S": "CANNOTPREDICTNOW.gif"
+            },
+            "lookup": {
+                "N": "4"
+            }
+        },
+        {
+            "value": {
+                "S": "REPLYHAZY.gif"
+            },
+            "lookup": {
+                "N": "13"
+            }
+        },
+        {
+            "value": {
+                "S": "WITHOUTADOUBT.gif"
+            },
+            "lookup": {
+                "N": "16"
+            }
+        },
+        {
+            "value": {
+                "S": "YES.gif"
+            },
+            "lookup": {
+                "N": "17"
+            }
+        },
+        {
+            "value": {
+                "S": "DONTCOUNTONIT.gif"
+            },
+            "lookup": {
+                "N": "6"
+            }
+        },
+        {
+            "value": {
+                "S": "OUTLOOKNOTSOGOOD.gif"
+            },
+            "lookup": {
+                "N": "20"
+            }
+        },
+        {
+            "value": {
+                "S": "YOUMAYRELYONIT.gif"
+            },
+            "lookup": {
+                "N": "19"
+            }
+        },
+        {
+            "value": {
+                "S": "ASISEEITYES.gif"
+            },
+            "lookup": {
+                "N": "1"
+            }
+        },
+        {
+            "value": {
+                "S": "CONCENTRATE.gif"
+            },
+            "lookup": {
+                "N": "5"
+            }
+        },
+        {
+            "value": {
+                "S": "VERYDOUBTFUL.gif"
+            },
+            "lookup": {
+                "N": "15"
+            }
+        },
+        {
+            "value": {
+                "S": "MYSOURCESSAYNO.gif"
+            },
+            "lookup": {
+                "N": "11"
+            }
+        }
+    ],
+    "Count": 20,
+    "ScannedCount": 20,
+    "ConsumedCapacity": null
+}
